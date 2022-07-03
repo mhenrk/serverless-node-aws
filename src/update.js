@@ -4,15 +4,15 @@ const handler = async (event) => {
   const dynamodb = new AWS.DynamoDB.DocumentClient();
   const { id } = event.pathParameters;
 
-  const { nome } = JSON.parse(event.body);
+  const { data } = JSON.parse(event.body);
 
   await dynamodb
     .update({
       TableName: "TabelaUsuario",
       Key: { id },
-      UpdateExpression: "set nome = :nome",
+      UpdateExpression: "set data = :d",
       ExpressionAttributeValues: {
-        ":nome": nome        
+        ":d": data        
       },
       ReturnValues: "ALL_NEW",
     })

@@ -5,17 +5,13 @@ const handler = async (event) => {
   const dynamodb = new AWS.DynamoDB.DocumentClient();
 
   const { nome, idade, cargo } = JSON.parse(event.body);
-  const createdAt = new Date();
-  createdAt.setDate()
-  
   const id = v4();
 
   const novoUsuario = {
     id,
     nome,
     idade,
-    cargo,
-    createdAt,
+    cargo
   };
 
   await dynamodb
