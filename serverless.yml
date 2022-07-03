@@ -4,11 +4,56 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs14.x
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - arn:aws:dynamodb:us-east-1:590268328004:table/TabelaUsuario
 
 functions:
   hello:
-    handler: handler.hello
+    handler: src/handler.hello
     events:
       - httpApi:
           path: /
           method: get
+  create:
+    handler: src/create.handler
+    events:
+      - httpApi:
+          path: /usuario
+          method: post
+  read:
+    handler: src/read.handler
+    events:
+      - httpApi:
+          path: /usuario
+          method: get
+  update:
+    handler: src/update.handler
+    events:
+      - httpApi:
+          path: /usuario/{id}
+          method: put
+  delete:
+    handler: src/update.handler
+    events:
+      - httpApi:
+          path: /usuario/{id}
+          method: delete
+
+resources:
+  Resources:
+    TabelaUsuario:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: TabelaUsuario
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
