@@ -13,12 +13,6 @@ provider:
         - arn:aws:dynamodb:us-east-1:590268328004:table/TabelaUsuario
 
 functions:
-  hello:
-    handler: src/handler.hello
-    events:
-      - httpApi:
-          path: /
-          method: get
   create:
     handler: src/create.handler
     events:
