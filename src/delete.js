@@ -3,11 +3,13 @@ const AWS = require("aws-sdk");
 const handler = async (event) => {
   const dynamodb = new AWS.DynamoDB.DocumentClient();
 
+  const { id } = event.pathParameters
+
   await dynamodb
     .delete({
       TableName: "TabelaUsuario",
       Key: {
-        id: event.pathParameters.id,
+        id: `${id}`
       },
     })
     .promise();
